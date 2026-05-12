@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "a+3okcEoGzo=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\anavi\\OneDrive\\Email attachments\\Documents\\Fish Web App\\FishApp.API\\FishApp.API.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\anavi\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.7\\microsoft.aspnetcore.openapi.10.0.7.nupkg.sha512",
+    "C:\\Users\\anavi\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
