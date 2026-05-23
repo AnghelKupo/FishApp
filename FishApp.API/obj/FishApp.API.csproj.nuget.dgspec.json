@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\avalencia\\Documentos local\\dev\\FishApp\\FishApp.API\\FishApp.API.csproj": {}
+    "C:\\Users\\avalencia\\Documentos local\\dev\\FishApp\\FishApp.API\\FishApp.API.csproj": {}
   },
   "projects": {
-    "c:\\Users\\avalencia\\Documentos local\\dev\\FishApp\\FishApp.API\\FishApp.API.csproj": {
+    "C:\\Users\\avalencia\\Documentos local\\dev\\FishApp\\FishApp.API\\FishApp.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\avalencia\\Documentos local\\dev\\FishApp\\FishApp.API\\FishApp.API.csproj",
+        "projectUniqueName": "C:\\Users\\avalencia\\Documentos local\\dev\\FishApp\\FishApp.API\\FishApp.API.csproj",
         "projectName": "FishApp.API",
-        "projectPath": "c:\\Users\\avalencia\\Documentos local\\dev\\FishApp\\FishApp.API\\FishApp.API.csproj",
+        "projectPath": "C:\\Users\\avalencia\\Documentos local\\dev\\FishApp\\FishApp.API\\FishApp.API.csproj",
         "packagesPath": "C:\\Users\\avalencia\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\avalencia\\Documentos local\\dev\\FishApp\\FishApp.API\\obj\\",
+        "outputPath": "C:\\Users\\avalencia\\Documentos local\\dev\\FishApp\\FishApp.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\avalencia\\AppData\\Roaming\\NuGet\\NuGet.Config"
