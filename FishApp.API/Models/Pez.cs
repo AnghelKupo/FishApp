@@ -1,17 +1,21 @@
-namespace FishApp.API.Models
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
+namespace FishApp.API.Models
 {
     public class Pez
     {
-        public required int Id { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
 
         public bool Sexo { get; set; }
 
-        public required DateTime FechaRegistro { get; set; }
+        [Required]
+        public DateTime FechaRegistro { get; set; }
 
         public string? PeriodoReproduccion { get; set; }
 
+        public ICollection<PezEstanque> PecesEstanques { get; set; } = new List<PezEstanque>();
     }
 }
-
-// See https://aka.ms/new-console-template for more information
