@@ -20,6 +20,7 @@ namespace FishApp.API.Data
             modelBuilder.Entity<Pez>(entity =>
             {
                 entity.ToTable("Pez");
+                entity.HasIndex(p => p.Codigo).IsUnique();
                 entity.Property(p => p.FechaRegistro).HasDefaultValueSql("GETDATE()");
             });
 
@@ -32,6 +33,7 @@ namespace FishApp.API.Data
             modelBuilder.Entity<PezEstanque>(entity =>
             {
                 entity.ToTable("PezEstanque");
+                entity.Property(pe => pe.FechaEntrada).HasDefaultValueSql("GETDATE()");
 
                 entity.HasOne(pe => pe.Pez)
                     .WithMany(p => p.PecesEstanques)

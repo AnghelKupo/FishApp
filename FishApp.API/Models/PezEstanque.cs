@@ -18,7 +18,7 @@ namespace FishApp.API.Models
         [Required]
         public DateTime FechaEntrada { get; set; }
 
-        public DateTime FechaSalida { get; set; }
+        public DateTime? FechaSalida { get; set; }
 
         [MaxLength(500)]
         public string? MotivoMovimento { get; set; }

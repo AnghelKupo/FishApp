@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { PezApiService, Pez } from '../api/pez.api.service';
+import { Observable, BehaviorSubject, switchMap, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { PezApiService, PezListItem } from '../api/pez.api.service';
+
+function logError(err: any) { console.error('Error al cargar peces', err); return of([] as PezListItem[]); }
 
 export interface PezStats {
   total: number;
@@ -13,21 +15,27 @@ export interface PezStats {
 
 @Injectable({ providedIn: 'root' })
 export class PezService {
+  private refresh$ = new BehaviorSubject<void>(undefined);
+
   constructor(private api: PezApiService) {}
 
-  getPeces(): Observable<Pez[]> {
-    return this.api.getPeces();
+  getPeces(): Observable<PezListItem[]> {
+    return this.refresh$.pipe(switchMap(() => this.api.getPeces().pipe(catchError(logError))));
   }
 
   getStats(): Observable<PezStats> {
-    return this.api.getPeces().pipe(
-      map(peces => ({
+    return this.getPeces().pipe(
+      map((peces) => ({
         total: peces.length,
-        hembras: peces.filter(p => p.sexo === 'H').length,
-        estanqueRepr: peces.filter(p => p.estanque === 'Reproducción').length,
-        estanquePrin: peces.filter(p => p.estanque === 'Principal').length,
-        enEtapa: peces.filter(p => p.enReproduccion).length
+        hembras: peces.filter((p) => p.sexo === 'H').length,
+        estanqueRepr: peces.filter((p) => p.estanqueId === 2).length,
+        estanquePrin: peces.filter((p) => p.estanqueId === 1).length,
+        enEtapa: peces.filter((p) => p.enReproduccion).length,
       }))
     );
+  }
+
+  refresh() {
+    this.refresh$.next();
   }
 }

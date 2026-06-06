@@ -38,9 +38,26 @@ namespace FishApp.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Pez>> PostPez(Pez pez)
+        public async Task<ActionResult<Pez>> PostPez(CrearPezRequest request)
         {
+            var pez = new Pez
+            {
+                Codigo = request.Codigo,
+                Sexo = request.Sexo,
+                FechaRegistro = request.FechaRegistro
+            };
+
             _context.Peces.Add(pez);
+            await _context.SaveChangesAsync();
+
+            var pezEstanque = new PezEstanque
+            {
+                IdPez = pez.Id,
+                IdEstanque = request.IdEstanque,
+                FechaEntrada = request.FechaEntrada
+            };
+
+            _context.PecesEstanques.Add(pezEstanque);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetPez), new { id = pez.Id }, pez);

@@ -9,6 +9,9 @@ namespace FishApp.API.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [Required]
+        public string Codigo { get; set; } = string.Empty;
+
         public bool Sexo { get; set; }
 
         [Required]

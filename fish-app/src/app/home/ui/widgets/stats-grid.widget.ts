@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { StatCardComponent } from '../components/stat-card.component';
 import { PezService } from '../../services/pez.service';
@@ -9,7 +9,7 @@ import { PezService } from '../../services/pez.service';
   imports: [StatCardComponent, AsyncPipe],
   template: `
     <div class="grid grid-cols-5 gap-4 mb-6">
-      @if (stats$.getStats() | async; as stats) {
+      @if (stats$ | async; as stats) {
         <home-stat-card label="Total de Peces" [value]="stats.total" />
         <home-stat-card label="Total Hembras" [value]="stats.hembras" />
         <home-stat-card label="Estanque Repr." [value]="stats.estanqueRepr" />
@@ -19,8 +19,6 @@ import { PezService } from '../../services/pez.service';
     </div>
   `
 })
-export class StatsGridWidget implements OnInit {
-  stats$ = inject(PezService);
-
-  ngOnInit() {}
+export class StatsGridWidget {
+  stats$ = inject(PezService).getStats();
 }
