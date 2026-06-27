@@ -7,5 +7,7 @@ namespace FishApp.API.Models
         public DateTime FechaRegistro { get; set; }
         public int IdEstanque { get; set; }
         public DateTime FechaEntrada { get; set; }
+        public int EspecieId { get; set; }
     }
 }
+

@@ -1,7 +1,8 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { EstanqueApiService, Estanque } from '../../api/estanque.api.service';
-import { PezApiService } from '../../api/pez.api.service';
+import { PezApiService, EspecieBackend } from '../../api/pez.api.service';
+import { EspecieApiService } from '../../api/especie.api.service';
 
 @Component({
   selector: 'home-pez-form',
@@ -26,6 +27,16 @@ import { PezApiService } from '../../api/pez.api.service';
           </select>
         </div>
         <div class="flex flex-col gap-1">
+          <label class="text-xs font-medium text-gray-500">Especie</label>
+          <select [(ngModel)]="especieId" required
+            class="px-3 py-2 border border-gray-300 rounded-md text-sm outline-none focus:border-blue-500 min-w-[180px]">
+            <option [ngValue]="null" disabled>Seleccionar</option>
+            @for (e of especies; track e.id) {
+              <option [ngValue]="e.id">{{ e.descripcion }}</option>
+            }
+          </select>
+        </div>
+        <div class="flex flex-col gap-1">
           <label class="text-xs font-medium text-gray-500">Estanque</label>
           <select [(ngModel)]="estanqueId" required
             class="px-3 py-2 border border-gray-300 rounded-md text-sm outline-none focus:border-blue-500 min-w-[180px]">
@@ -40,7 +51,7 @@ import { PezApiService } from '../../api/pez.api.service';
           <input type="text" [value]="fechaActual" disabled
             class="px-3 py-2 border border-gray-200 rounded-md text-sm bg-gray-50 text-gray-500 min-w-[140px]" />
         </div>
-        <button [disabled]="!codigo || !sexo || !estanqueId || guardando" (click)="onRegistrar()"
+        <button [disabled]="!codigo || !sexo || !especieId || !estanqueId || guardando" (click)="onRegistrar()"
           class="flex items-center gap-2 px-5 py-2.5 bg-blue-500 text-white rounded-md text-sm font-medium cursor-pointer hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
@@ -57,6 +68,8 @@ export class PezFormComponent implements OnInit {
 
   codigo = '';
   sexo = '';
+  especieId: number | null = null;
+  especies: EspecieBackend[] = [];
   estanqueId: number | null = null;
   estanques: Estanque[] = [];
   fechaActual = '';
@@ -64,6 +77,7 @@ export class PezFormComponent implements OnInit {
 
   constructor(
     private estanqueApi: EstanqueApiService,
+    private especieApi: EspecieApiService,
     private pezApi: PezApiService
   ) {}
 
@@ -77,10 +91,14 @@ export class PezFormComponent implements OnInit {
       next: (res) => (this.estanques = res),
       error: () => console.error('Error al cargar estanques')
     });
+    this.especieApi.getEspecies().subscribe({
+      next: (res) => (this.especies = res),
+      error: () => console.error('Error al cargar especies')
+    });
   }
 
   onRegistrar() {
-    if (!this.codigo || !this.sexo || !this.estanqueId) return;
+    if (!this.codigo || !this.sexo || !this.especieId || !this.estanqueId) return;
 
     this.guardando = true;
     const ahora = new Date().toISOString();
@@ -90,12 +108,14 @@ export class PezFormComponent implements OnInit {
       sexo: this.sexo === 'H',
       fechaRegistro: ahora,
       idEstanque: this.estanqueId,
-      fechaEntrada: ahora
+      fechaEntrada: ahora,
+      especieId: this.especieId
     }).subscribe({
       next: () => {
         this.guardando = false;
         this.codigo = '';
         this.sexo = '';
+        this.especieId = null;
         this.estanqueId = null;
         this.registrado.emit();
       },

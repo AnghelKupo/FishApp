@@ -19,7 +19,8 @@ namespace FishApp.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Pez>>> GetPeces()
         {
-            return await _context.Peces.Include(p => p.PecesEstanques)
+            return await _context.Peces.Include(p => p.Especie)
+                                       .Include(p => p.PecesEstanques)
                                        .ThenInclude(pe => pe.Estanque)
                                        .ToListAsync();
         }
@@ -27,7 +28,8 @@ namespace FishApp.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Pez>> GetPez(int id)
         {
-            var pez = await _context.Peces.Include(p => p.PecesEstanques)
+            var pez = await _context.Peces.Include(p => p.Especie)
+                                          .Include(p => p.PecesEstanques)
                                           .ThenInclude(pe => pe.Estanque)
                                           .FirstOrDefaultAsync(p => p.Id == id);
 
@@ -44,7 +46,9 @@ namespace FishApp.API.Controllers
             {
                 Codigo = request.Codigo,
                 Sexo = request.Sexo,
-                FechaRegistro = request.FechaRegistro
+                FechaRegistro = request.FechaRegistro,
+                FechaUltimaReproduccion = request.FechaRegistro,
+                EspecieId = request.EspecieId
             };
 
             _context.Peces.Add(pez);

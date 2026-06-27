@@ -3,12 +3,19 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+export interface EspecieBackend {
+  id: number;
+  descripcion: string;
+}
+
 export interface PezBackend {
   id: number;
   codigo: string;
   sexo: boolean;
   fechaRegistro: string;
-  periodoReproduccion: string | null;
+  fechaUltimaReproduccion: string | null;
+  especieId: number;
+  especie: EspecieBackend;
   pecesEstanques: PezEstanqueBackend[];
 }
 
@@ -27,7 +34,9 @@ export interface PezListItem {
   codigo: string;
   sexo: string;
   fechaRegistro: string;
-  periodoReproduccion: string | null;
+  fechaUltimaReproduccion: string | null;
+  especieId: number;
+  especie: string;
   enReproduccion: boolean;
   estanque: string;
   estanqueId: number | null;
@@ -41,6 +50,7 @@ export interface CreatePezRequest {
   fechaRegistro: string;
   idEstanque: number;
   fechaEntrada: string;
+  especieId: number;
 }
 
 function toPezListItem(p: PezBackend): PezListItem {
@@ -60,8 +70,10 @@ function toPezListItem(p: PezBackend): PezListItem {
     codigo: p.codigo,
     sexo: p.sexo ? 'H' : 'M',
     fechaRegistro: p.fechaRegistro,
-    periodoReproduccion: p.periodoReproduccion,
-    enReproduccion: p.periodoReproduccion != null,
+    fechaUltimaReproduccion: p.fechaUltimaReproduccion,
+    especieId: p.especieId,
+    especie: p.especie?.descripcion ?? '',
+    enReproduccion: false,
     estanque: ultimo?.estanque?.nombre ?? '',
     estanqueId: ultimo?.idEstanque ?? null,
     entradaEstanque: fechaEntrada,

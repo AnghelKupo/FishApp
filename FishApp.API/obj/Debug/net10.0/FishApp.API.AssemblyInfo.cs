@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FishApp.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6ed922bc079f528c9f6fd0e2bdc755f00bebd19c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e1ca5b643d8a597a93fd6927a0f10c7f729c6fbc")]
 [assembly: System.Reflection.AssemblyProductAttribute("FishApp.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FishApp.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
